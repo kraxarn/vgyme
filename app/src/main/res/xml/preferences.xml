@@ -3,23 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="General">
-
-        <SwitchPreference
-            android:title="Copy to clipboard"
-            android:defaultValue="true"
-            android:key="copyToClipboard"
-            android:summary="Copy image link to the clipboard after a successful upload"/>
-
-        <SwitchPreference
-            android:title="Notification"
-            android:defaultValue="true"
-            android:key="notification"
-            android:summary="Show a notification after a successful upload"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:title="Login">
 
         <EditTextPreference
