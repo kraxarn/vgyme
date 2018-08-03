@@ -1,12 +1,15 @@
 package com.crow.vgyme.fragment;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -26,9 +29,14 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -111,6 +119,53 @@ public class FragmentUploadImage extends Fragment
 
 							Log.i("IMAGE_UPLOAD", "Success");
 							Log.i("HTTP_RESPONSE", response);
+
+							JSONObject json;
+							String link0 = null;
+
+							try
+							{
+								json = new JSONObject(response);
+								link0 = json.getString("image");
+							}
+							catch (JSONException e)
+							{
+								e.printStackTrace();
+								Tools.showDialog(getActivity(), "Invalid response", "Invalid response, check logcat for details");
+							}
+
+							final String link = link0;
+
+							// I really need to start learning Java
+							String[] items = { "Open link", "Copy to clipboard"};
+							final ArrayList<Integer> selectedItems = new ArrayList<>();
+
+							AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+							builder
+									.setTitle("Upload complete!")
+									.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener()
+									{
+										@Override
+										public void onClick(DialogInterface dialogInterface, int index, boolean checked)
+										{
+											if (checked)
+												selectedItems.add(index);
+											else
+												selectedItems.remove(Integer.valueOf(index));
+										}
+									})
+									.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+									{
+										public void onClick(DialogInterface dialog, int which)
+										{
+											if (selectedItems.contains(0))
+												Tools.openBrowser(getActivity(), link);
+
+											if (selectedItems.contains(1))
+												Tools.setClipboard(getActivity(), "image", link);
+										}
+									})
+									.show();
 						}
 
 						@Override
@@ -120,6 +175,7 @@ public class FragmentUploadImage extends Fragment
 
 							Log.i("IMAGE_UPLOAD", "Failed");
 							Log.i("HTTP_RESPONSE", response);
+							Tools.showDialog(getActivity(), "Error", "Failed to upload image, check logcat for details");
 						}
 
 						@Override

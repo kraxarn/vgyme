@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,5 +68,12 @@ public abstract class Tools
 	public static void openBrowser(Context context, String url)
 	{
 		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+	}
+
+	public static void setClipboard(Context context, String label, String text)
+	{
+		ClipboardManager manager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+		ClipData data = ClipData.newPlainText(label, text);
+		manager.setPrimaryClip(data);
 	}
 }
