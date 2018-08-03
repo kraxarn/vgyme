@@ -19,7 +19,7 @@ public abstract class Tools
 {
 	public static String version = "1.0.0";
 
-	public static void setFragment(MainActivity source, Fragment fragment)
+	public static void setFragment(Activity source, Fragment fragment)
 	{
 		FragmentManager manager = source.getFragmentManager();
 
@@ -52,7 +52,6 @@ public abstract class Tools
 					{
 					}
 				})
-				.setIcon(android.R.drawable.ic_dialog_info)
 				.show();
 	}
 

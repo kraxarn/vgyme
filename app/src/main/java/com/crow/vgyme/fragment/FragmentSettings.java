@@ -1,13 +1,22 @@
-package com.crow.vgyme;
+package com.crow.vgyme.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
+
+import com.crow.vgyme.BuildConfig;
+import com.crow.vgyme.R;
+import com.crow.vgyme.Tools;
 
 public class FragmentSettings extends PreferenceFragment
 {
@@ -39,7 +48,7 @@ public class FragmentSettings extends PreferenceFragment
 		switch (preference.getKey())
 		{
 			case "uploadImage":
-				Tools.showDialog(getActivity(), "Sorry", "NotImplemented");
+				Tools.setFragment(getActivity(), new FragmentUploadImage());
 				break;
 
 			case "userKeyButton":

@@ -1,14 +1,12 @@
 package com.crow.vgyme;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.crow.vgyme.fragment.FragmentSettings;
 
 public class MainActivity extends AppCompatActivity
 {
