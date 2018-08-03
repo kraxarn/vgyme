@@ -36,12 +36,20 @@ public class FragmentSettings extends PreferenceFragment
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference)
 	{
-		if (preference.getKey().equals("uploadImage"))
-			Tools.showDialog(getActivity(), "Sorry", "NotImplemented");
-		else if (preference.getKey().equals("userKeyButton"))
-			Tools.openBrowser(getActivity(), "https://vgy.me/account/details");
-		else if (preference.getKey().equals("openProjectPage"))
-			Tools.openBrowser(getActivity(), "https://github.com/kraxarn/vgyme");
+		switch (preference.getKey())
+		{
+			case "uploadImage":
+				Tools.showDialog(getActivity(), "Sorry", "NotImplemented");
+				break;
+
+			case "userKeyButton":
+				Tools.openBrowser(getActivity(), "https://vgy.me/account/details");
+				break;
+
+			case "openProjectPage":
+				Tools.openBrowser(getActivity(), "https://github.com/kraxarn/vgyme");
+				break;
+		}
 
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}
