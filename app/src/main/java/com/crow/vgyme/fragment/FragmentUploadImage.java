@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,15 @@ import android.widget.Switch;
 
 import com.crow.vgyme.R;
 import com.crow.vgyme.Tools;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import cz.msebera.android.httpclient.Header;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -73,6 +80,9 @@ public class FragmentUploadImage extends Fragment
 			@Override
 			public void onClick(View view)
 			{
+				view.findViewById(R.id.upload).setEnabled(false);
+				((Button) view.findViewById(R.id.upload)).setText("Uploading...");
+
 				if (image == null)
 				{
 					Tools.showDialog(getActivity(), "No image", "Select an image to upload first");
@@ -82,7 +92,45 @@ public class FragmentUploadImage extends Fragment
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
 					image.compress(Bitmap.CompressFormat.PNG, 100, stream);
 					byte[] bytes = stream.toByteArray();
-					String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+
+					// Create web client
+					AsyncHttpClient client = new AsyncHttpClient();
+
+					// Create parameters
+					RequestParams params = new RequestParams();
+					params.put("file", new ByteArrayInputStream(bytes), "image.png");
+
+					final View rootView = view;
+
+					client.post("https://vgy.me/upload", params, new AsyncHttpResponseHandler()
+					{
+						@Override
+						public void onSuccess(int statusCode, Header[] headers, byte[] responseBody)
+						{
+							String response = new String(responseBody);
+
+							Log.i("IMAGE_UPLOAD", "Success");
+							Log.i("HTTP_RESPONSE", response);
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
+						{
+							String response = new String(responseBody);
+
+							Log.i("IMAGE_UPLOAD", "Failed");
+							Log.i("HTTP_RESPONSE", response);
+						}
+
+						@Override
+						public void onFinish()
+						{
+							super.onFinish();
+
+							rootView.findViewById(R.id.upload).setEnabled(true);
+							((Button) rootView.findViewById(R.id.upload)).setText("Upload");
+						}
+					});
 				}
 			}
 		});

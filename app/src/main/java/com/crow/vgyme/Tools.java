@@ -11,9 +11,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import java.io.ByteArrayInputStream;
 import java.util.Calendar;
 import java.util.Date;
+
+import cz.msebera.android.httpclient.Header;
 
 public abstract class Tools
 {
