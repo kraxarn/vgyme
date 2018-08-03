@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="General">
+
+        <SwitchPreference
+            android:title="Copy to clipboard"
+            android:defaultValue="true"
+            android:key="copyToClipboard"
+            android:summary="Copy image link to the clipboard after a successful upload"/>
+
+        <SwitchPreference
+            android:title="Notification"
+            android:defaultValue="true"
+            android:key="notification"
+            android:summary="Show a notification after a successful upload"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Login">
+
+        <EditTextPreference
+            android:title="User key"
+            android:key="userKey"
+            android:summary="User key for account"
+            android:inputType="text"
+            android:selectAllOnFocus="true"/>
+
+        <Preference
+            android:title="Get user key"
+            android:key="userKeyButton"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Upload">
+
+        <Preference
+            android:title="Upload image"
+            android:key="uploadImage"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="About">
+
+        <Preference
+            android:title="Version 0.0.0"
+            android:key="appVersion"
+            android:summary="0000-00-00"/>
+
+        <Preference
+            android:title="Created by kraxarn"
+            android:summary="Open project page"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
