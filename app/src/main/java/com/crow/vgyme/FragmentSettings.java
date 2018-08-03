@@ -37,6 +37,8 @@ public class FragmentSettings extends PreferenceFragment
 			Tools.showDialog(getActivity(), "Sorry", "NotImplemented");
 		else if (preference.getKey().equals("userKeyButton"))
 			Tools.openBrowser(getActivity(), "https://vgy.me/account/details");
+		else if (preference.getKey().equals("openProjectPage"))
+			Tools.openBrowser(getActivity(), "https://github.com/kraxarn/vgyme");
 
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}

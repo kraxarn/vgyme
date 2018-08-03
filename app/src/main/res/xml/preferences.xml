@@ -54,6 +54,7 @@
 
         <Preference
             android:title="Created by kraxarn"
+            android:key="openProjectPage"
             android:summary="Open project page"/>
 
     </PreferenceCategory>
