@@ -8,6 +8,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 
 import java.util.Calendar;
@@ -52,5 +54,10 @@ public abstract class Tools
 				})
 				.setIcon(android.R.drawable.ic_dialog_info)
 				.show();
+	}
+
+	public static void openBrowser(Context context, String url)
+	{
+		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 	}
 }

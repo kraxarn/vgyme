@@ -35,6 +35,8 @@ public class FragmentSettings extends PreferenceFragment
 	{
 		if (preference.getKey().equals("uploadImage"))
 			Tools.showDialog(getActivity(), "Sorry", "NotImplemented");
+		else if (preference.getKey().equals("userKeyButton"))
+			Tools.openBrowser(getActivity(), "https://vgy.me/account/details");
 
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}
