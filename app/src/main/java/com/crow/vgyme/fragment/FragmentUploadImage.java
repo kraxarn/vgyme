@@ -108,6 +108,11 @@ public class FragmentUploadImage extends Fragment
 					RequestParams params = new RequestParams();
 					params.put("file", new ByteArrayInputStream(bytes), "image.png");
 
+					if (((Switch) view.findViewById(R.id.uploadToAccount)).isChecked() && prefs.getString("userKey", null) != null)
+					{
+						params.put("userkey", prefs.getString("userKey", null));
+					}
+
 					final View rootView = view;
 
 					client.post("https://vgy.me/upload", params, new AsyncHttpResponseHandler()
