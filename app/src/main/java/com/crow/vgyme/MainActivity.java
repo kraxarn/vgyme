@@ -36,5 +36,9 @@ public class MainActivity extends AppCompatActivity
 		Tools.setFragment(this, fragmentSettings);
 
 		setContentView(R.layout.activity_main);
+
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		getSupportActionBar().setIcon(R.drawable.ic_cloud_upload);
+		getSupportActionBar().setTitle("  vgyme settings");
 	}
 }
