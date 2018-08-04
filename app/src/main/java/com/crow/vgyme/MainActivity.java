@@ -16,6 +16,11 @@ public class MainActivity extends AppCompatActivity
 
 	private SharedPreferences prefs;
 
+	public void setTitle(String title)
+	{
+		getSupportActionBar().setTitle(title);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
