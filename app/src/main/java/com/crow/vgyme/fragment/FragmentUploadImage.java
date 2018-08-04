@@ -81,6 +81,8 @@ public class FragmentUploadImage extends Fragment
 
 		// Upload to account switch
 		// This seriously feels like a hack
+		uploadToAccount = false;
+
 		((Switch) view.findViewById(R.id.uploadToAccount)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 		{
 			@Override
