@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity
 
 	public void setTitle(String title)
 	{
+		if (getSupportActionBar() == null)
+			throw new IllegalStateException("No status bar to set title to");
+
 		getSupportActionBar().setTitle(title);
 	}
 
@@ -41,6 +44,6 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 
 		// Set title
-		getSupportActionBar().setTitle("vgyme settings");
+		setTitle("vgyme settings");
 	}
 }
