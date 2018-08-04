@@ -46,4 +46,11 @@ public class MainActivity extends AppCompatActivity
 		// Set title
 		setTitle("Settings");
 	}
+
+	@Override
+	public void onBackPressed()
+	{
+		Tools.setFragment(this, fragmentSettings);
+		setTitle("Settings");
+	}
 }
