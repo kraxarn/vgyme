@@ -49,6 +49,8 @@ public class FragmentUploadImage extends Fragment
 
 	private Bitmap image;
 
+	private String imageType;
+
 	private boolean uploadToAccount;
 
 	@Nullable
@@ -108,7 +110,29 @@ public class FragmentUploadImage extends Fragment
 				else
 				{
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+					switch (imageType)
+					{
+						case "image/jpeg":
+							image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+							break;
+
+						case "image/png":
+						case "image/webp":
+							image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+							break;
+
+						case "image/gif":
+							Tools.showDialog(getActivity(), "Format not supported", "Sorry, but gif files aren't supported at this time");
+							setUploading(false);
+							return;
+
+						default:
+							Tools.showDialog(getActivity(), "Format not supported", String.format("Format %s is not supported by vgy.me", imageType));
+							setUploading(false);
+							return;
+					}
+
 					byte[] bytes = stream.toByteArray();
 
 					// Create web client
@@ -134,7 +158,7 @@ public class FragmentUploadImage extends Fragment
 							Log.i("HTTP_RESPONSE", response);
 
 							JSONObject json;
-							String link0 = null;
+							String link0;
 
 							try
 							{
@@ -222,6 +246,14 @@ public class FragmentUploadImage extends Fragment
 			try
 			{
 				image = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+				imageType = getActivity().getContentResolver().getType(uri);
+
+				// Check so it's an actual image
+				if (!imageType.startsWith("image/"))
+				{
+					Tools.showDialog(getActivity(), "Invalid image", "That doesn't look like an image to me");
+					return;
+				}
 			}
 			catch (IOException e)
 			{
