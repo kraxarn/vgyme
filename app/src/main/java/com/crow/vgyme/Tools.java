@@ -27,8 +27,6 @@ import cz.msebera.android.httpclient.Header;
 
 public abstract class Tools
 {
-	public static String version = "1.0.0";
-
 	public static void setFragment(Activity source, Fragment fragment)
 	{
 		FragmentManager manager = source.getFragmentManager();
