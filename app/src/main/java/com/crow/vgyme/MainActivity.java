@@ -44,6 +44,6 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 
 		// Set title
-		setTitle("settings");
+		setTitle("Settings");
 	}
 }

@@ -204,7 +204,7 @@ public class FragmentUploadImage extends Fragment
 			}
 		});
 
-		((MainActivity) getActivity()).setTitle("upload image");
+		((MainActivity) getActivity()).setTitle("Upload Image");
 
 		return view;
 	}
