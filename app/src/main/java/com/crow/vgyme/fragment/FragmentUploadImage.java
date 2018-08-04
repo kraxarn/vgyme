@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -48,6 +49,8 @@ public class FragmentUploadImage extends Fragment
 
 	private Bitmap image;
 
+	private boolean uploadToAccount;
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -73,6 +76,17 @@ public class FragmentUploadImage extends Fragment
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("image/*");
 				startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+			}
+		});
+
+		// Upload to account switch
+		// This seriously feels like a hack
+		((Switch) view.findViewById(R.id.uploadToAccount)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean checked)
+			{
+				uploadToAccount = checked;
 			}
 		});
 
@@ -102,7 +116,7 @@ public class FragmentUploadImage extends Fragment
 					RequestParams params = new RequestParams();
 					params.put("file", new ByteArrayInputStream(bytes), "image.png");
 
-					if (((Switch) view.findViewById(R.id.uploadToAccount)).isChecked() && prefs.getString("userKey", null) != null)
+					if (uploadToAccount && prefs.getString("userKey", null) != null)
 					{
 						params.put("userkey", prefs.getString("userKey", null));
 					}
