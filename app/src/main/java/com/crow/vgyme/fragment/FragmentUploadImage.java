@@ -123,8 +123,6 @@ public class FragmentUploadImage extends Fragment
 						params.put("userkey", prefs.getString("userKey", null));
 					}
 
-					final View rootView = view;
-
 					client.post("https://vgy.me/upload", params, new AsyncHttpResponseHandler()
 					{
 						@Override
