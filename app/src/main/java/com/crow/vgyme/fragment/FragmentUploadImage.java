@@ -98,12 +98,12 @@ public class FragmentUploadImage extends Fragment
 			@Override
 			public void onClick(View view)
 			{
-				view.findViewById(R.id.upload).setEnabled(false);
-				((Button) view.findViewById(R.id.upload)).setText("Uploading...");
+				setUploading(true);
 
 				if (image == null)
 				{
 					Tools.showDialog(getActivity(), "No image", "Select an image to upload first");
+					setUploading(false);
 				}
 				else
 				{
@@ -147,6 +147,9 @@ public class FragmentUploadImage extends Fragment
 							{
 								e.printStackTrace();
 								Tools.showDialog(getActivity(), "Invalid response", "Invalid response, check logcat for details");
+
+								setUploading(false);
+								return;
 							}
 
 							final String link = link0;
@@ -186,20 +189,17 @@ public class FragmentUploadImage extends Fragment
 						@Override
 						public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error)
 						{
-							String response = new String(responseBody);
-
 							Log.i("IMAGE_UPLOAD", "Failed");
-							Log.i("HTTP_RESPONSE", response);
-							Tools.showDialog(getActivity(), "Error", "Failed to upload image, check logcat for details");
+							Log.i("HTTP_RESPONSE", error.getMessage());
+							Tools.showDialog(getActivity(), "Failed to upload image", error.getMessage());
+							setUploading(false);
 						}
 
 						@Override
 						public void onFinish()
 						{
 							super.onFinish();
-
-							rootView.findViewById(R.id.upload).setEnabled(true);
-							((Button) rootView.findViewById(R.id.upload)).setText("Upload");
+							setUploading(false);
 						}
 					});
 				}
@@ -233,5 +233,11 @@ public class FragmentUploadImage extends Fragment
 
 			((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(image);
 		}
+	}
+
+	private void setUploading(boolean uploading)
+	{
+		view.findViewById(R.id.upload).setEnabled(!uploading);
+		((Button) view.findViewById(R.id.upload)).setText(uploading ? "Uploading..." : "Upload");
 	}
 }
