@@ -33,7 +33,7 @@
         <Preference
             android:title="Version 0.0.0"
             android:key="appVersion"
-            android:summary="2018-08-04"/>
+            android:summary="2018-08-05"/>
 
         <Preference
             android:title="Created by kraxarn"
