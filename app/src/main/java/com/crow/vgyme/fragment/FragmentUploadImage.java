@@ -2,6 +2,7 @@ package com.crow.vgyme.fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -246,27 +247,10 @@ public class FragmentUploadImage extends Fragment
 
 		if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null)
 		{
-			Uri uri = data.getData();
+			// Set image variables
+			setImage(getActivity(), data.getData());
 
-			image = null;
-			try
-			{
-				image = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-				imageType = getActivity().getContentResolver().getType(uri);
-
-				// Check so it's an actual image
-				if (!imageType.startsWith("image/"))
-				{
-					Tools.showDialog(getActivity(), "Invalid image", "That doesn't look like an image to me");
-					return;
-				}
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-				Tools.showDialog(getActivity(), "Image not found", e.getMessage());
-			}
-
+			// Set image view
 			((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(image);
 		}
 	}
@@ -277,9 +261,24 @@ public class FragmentUploadImage extends Fragment
 		((Button) view.findViewById(R.id.upload)).setText(uploading ? "Uploading..." : "Upload");
 	}
 
-	public void setImage(Bitmap image, String imageType)
+	public void setImage(Context context, Uri uri)
 	{
-		this.image = image;
-		this.imageType = imageType;
+		try
+		{
+			// Get image data
+			image     = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+			imageType = context.getContentResolver().getType(uri);
+
+			// Check so it's an actual image
+			if (imageType == null || !imageType.startsWith("image/"))
+			{
+				Tools.showDialog(getActivity(), "Invalid image", "That doesn't look like an image to me");
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			Tools.showDialog(getActivity(), "Image not found", e.getMessage());
+		}
 	}
 }
