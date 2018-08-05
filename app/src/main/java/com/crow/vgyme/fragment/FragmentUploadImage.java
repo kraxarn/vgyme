@@ -94,6 +94,12 @@ public class FragmentUploadImage extends Fragment
 			}
 		});
 
+		// Check if we set an image
+		if (image != null)
+		{
+			((ImageView) view.findViewById(R.id.imageView)).setImageBitmap(image);
+		}
+
 		// Upload button
 		view.findViewById(R.id.upload).setOnClickListener(new View.OnClickListener()
 		{
@@ -269,5 +275,11 @@ public class FragmentUploadImage extends Fragment
 	{
 		view.findViewById(R.id.upload).setEnabled(!uploading);
 		((Button) view.findViewById(R.id.upload)).setText(uploading ? "Uploading..." : "Upload");
+	}
+
+	public void setImage(Bitmap image, String imageType)
+	{
+		this.image = image;
+		this.imageType = imageType;
 	}
 }
