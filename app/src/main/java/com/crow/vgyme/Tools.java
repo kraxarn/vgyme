@@ -27,6 +27,8 @@ import cz.msebera.android.httpclient.Header;
 
 public abstract class Tools
 {
+	private static Fragment currentFragment;
+
 	public static void setFragment(Activity source, Fragment fragment)
 	{
 		FragmentManager manager = source.getFragmentManager();
@@ -41,6 +43,13 @@ public abstract class Tools
 			transaction.addToBackStack(null);
 			transaction.commit();
 		}
+
+		currentFragment = fragment;
+	}
+
+	public static Fragment getFragment()
+	{
+		return currentFragment;
 	}
 
 	public static void showDialog(Context context, String title, String message)

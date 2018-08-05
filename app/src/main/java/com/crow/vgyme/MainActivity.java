@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.crow.vgyme.fragment.FragmentSettings;
 import com.crow.vgyme.fragment.FragmentUploadImage;
@@ -52,7 +53,13 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public void onBackPressed()
 	{
-		Tools.setFragment(this, fragmentSettings);
-		setTitle("Settings");
+		// Check if we're already in settings
+		if (Tools.getFragment() instanceof  FragmentSettings)
+			super.onBackPressed();
+		else
+		{
+			Tools.setFragment(this, fragmentSettings);
+			setTitle("Settings");
+		}
 	}
 }
