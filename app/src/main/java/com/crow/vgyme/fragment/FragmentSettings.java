@@ -39,7 +39,7 @@ public class FragmentSettings extends PreferenceFragment
 		findPreference("appVersion").setTitle(String.format("Version %s", BuildConfig.VERSION_NAME));
 
 		// Check if user key is set
-		findPreference("userKey").setSummary("User key for account " + (prefs.contains("userKey") ? "(set)" : "(not set)"));
+		findPreference("userKey").setSummary("User key for account " + (prefs.getString("userKey", "").length() > 0 ? "(set)" : "(not set)"));
 	}
 
 	@Override
