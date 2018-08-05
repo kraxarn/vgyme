@@ -1,12 +1,6 @@
 package com.crow.vgyme.fragment;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -39,7 +33,23 @@ public class FragmentSettings extends PreferenceFragment
 		findPreference("appVersion").setTitle(String.format("Version %s", BuildConfig.VERSION_NAME));
 
 		// Check if user key is set
-		findPreference("userKey").setSummary("User key for account " + (prefs.getString("userKey", "").length() > 0 ? "(set)" : "(not set)"));
+		setUserKeySummary(prefs.getString("userKey", "").length() > 0);
+
+		// Check if user was set during runtime
+		findPreference("userKey").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+		{
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue)
+			{
+				setUserKeySummary(((String) newValue).length() > 0);
+				return true;
+			}
+		});
+	}
+
+	private void setUserKeySummary(boolean set)
+	{
+		findPreference("userKey").setSummary("User key for account " + (set ? "(set)" : "(not set)"));
 	}
 
 	@Override
