@@ -1,4 +1,4 @@
-![vgy.me uploader](https://vgy.me/z88fwN.png)
+![vgy.me uploader](https://vgy.me/lKj8Ik.png)
 ### Android app to upload images to vgy.me
 #### Supports both anonymous and user uploads
 #### [Download from Play Store](https://play.google.com/store/apps/details?id=com.crow.vgyme)
